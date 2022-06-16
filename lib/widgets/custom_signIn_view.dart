@@ -26,10 +26,9 @@ class CustomSignInView extends StatelessWidget {
                   width: 200,
                 ),
 
-                // custom challenge field
                 SignInFormField.username(),
 
-                // custom challenge field
+                // Un-comment the line below for Secure Remote Password (SRP) experince
                 //SignInFormField.password(),
 
                 // prebuilt sign up button from amplify_authenticator package
