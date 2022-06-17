@@ -11,15 +11,12 @@ class NavigateToSignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          // abort sign in is called to make sure that the current auth flow is cancelled.
-          onPressed: state.abortSignIn,
-          child: const Text('Cancel Sign In'),
-        ),
-      ],
+    return Center(
+      child: TextButton(
+        // abort sign in is called to make sure that the current auth flow is cancelled.
+        onPressed: state.abortSignIn,
+        child: const Text('Cancel Sign In'),
+      ),
     );
   }
 }

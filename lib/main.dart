@@ -9,8 +9,6 @@ import 'amplifyconfiguration.dart';
 import 'widgets/custom_confirm_signIn_view.dart';
 import 'widgets/custom_signIn_view.dart';
 
-final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
-
 void main() {
   runApp(const MyApp());
 }
@@ -29,28 +27,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _configureAmplify();
-  }
-
-  void _configureAmplify() async {
-    try {
-      await Amplify.addPlugin(AmplifyAuthCognito());
-      await Amplify.configure(amplifyconfig);
-      setState(() {
-        _amplifyConfigured = true;
-      });
-    } on AmplifyAlreadyConfiguredException {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.red,
-        content: Text(
-          'Tried to reconfigure Amplify; '
-          'this can occur when your app restarts on Android.',
-        ),
-      ));
-    }
-  }
-
-  Widget buildApp(BuildContext context) {
-    return _amplifyConfigured ? const HomePage() : _waitForAmplify();
   }
 
   @override
@@ -76,11 +52,31 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Scaffold _waitForAmplify() {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+  void _configureAmplify() async {
+    try {
+      await Amplify.addPlugin(AmplifyAuthCognito());
+      await Amplify.configure(amplifyconfig);
+      setState(() {
+        _amplifyConfigured = true;
+      });
+    } on AmplifyAlreadyConfiguredException {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(
+          'Tried to reconfigure Amplify; '
+          'this can occur when your app restarts on Android.',
+        ),
+      ));
+    }
+  }
+
+  Widget buildApp(BuildContext context) {
+    return _amplifyConfigured
+        ? const HomePage()
+        : const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
   }
 }
