@@ -47,7 +47,13 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         builder: Authenticator.builder(),
-        home: buildApp(context),
+        home:  _amplifyConfigured
+        ? const HomePage()
+        : const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
       ),
     );
   }
@@ -70,13 +76,5 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Widget buildApp(BuildContext context) {
-    return _amplifyConfigured
-        ? const HomePage()
-        : const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-  }
+
 }
