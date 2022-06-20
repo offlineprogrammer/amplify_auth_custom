@@ -38,3 +38,4 @@ amplify push
 ```
 
 - Run the app and try registering a new user.
+
