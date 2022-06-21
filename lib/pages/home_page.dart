@@ -1,4 +1,4 @@
-import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +14,19 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const SignOutButton(),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await Amplify.Auth.signOut();
+                } on Exception catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text(e.toString()),
+                  ));
+                }
+              },
+              child: const Text('Sign Out'),
+            ),
           ],
         ),
       ),
